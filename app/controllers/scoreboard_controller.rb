@@ -2,7 +2,7 @@ class ScoreboardController < ApplicationController
   include ActionController::Live
   def index
     response.headers['Content-Type'] = 'text/event-stream'
-    sse = SSE.new(response.stream, event: 'scoreboard-update')
+    sse = SSE.new(response.stream,)
     scoreboard = make_scoreboard
     sse.write(scoreboard.to_json)
     redis = Redis.new
