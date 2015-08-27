@@ -13,7 +13,6 @@ class ScoreboardController < ApplicationController
     end
   ensure
     redis.quit
-    _re.quit
     sse.close
   end
 
