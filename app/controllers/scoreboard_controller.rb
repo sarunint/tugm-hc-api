@@ -3,15 +3,14 @@ class ScoreboardController < ApplicationController
   def index
     response.headers['Content-Type'] = 'text/event-stream'
     sse = SSE.new(response.stream, event: 'scoreboard-update')
+    scoreboard = make_scoreboard
+    sse.write(scoreboard.to_json)
     redis = Redis.new
     redis.subscribe('tugm-hc') do |on|
       on.message do |channel, message|
         sse.write(message)
       end
     end
-    _re = Redis.new
-    scoreboard = make_scoreboard
-    _re.publish('tugm-hc', scoreboard.to_json)
   ensure
     redis.quit
     _re.quit
