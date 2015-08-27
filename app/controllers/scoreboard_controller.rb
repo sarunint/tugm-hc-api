@@ -9,8 +9,12 @@ class ScoreboardController < ApplicationController
         sse.write(message)
       end
     end
+    _re = Redis.new
+    scoreboard = make_scoreboard
+    _re.publish('tugm-hc', scoreboard.to_json)
   ensure
     redis.quit
+    _re.quit
     sse.close
   end
 
