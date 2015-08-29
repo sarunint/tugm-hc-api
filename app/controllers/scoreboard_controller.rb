@@ -35,7 +35,7 @@ class ScoreboardController < ApplicationController
   def make_scoreboard
     questions = []
     Question.all.each do |q|
-      r = Record.where(questions: q)
+      r = Record.where(question: q)
       questions << { id: q.id, score: q.max_score, answered: r.count, corrected: r.where(correct: true).count }
     end
     teams = []
