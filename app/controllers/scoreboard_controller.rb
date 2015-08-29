@@ -28,6 +28,15 @@ class ScoreboardController < ApplicationController
     render json: scoreboard
   end
 
+  def destroy
+    Record.destroy_all
+    redis = Redis.new
+    scoreboard = make_scoreboard
+    redis.publish('tugm-hc', scoreboard.to_json)
+    redis.quit
+    render json: scoreboard
+  end
+
   def show
     render json: make_scoreboard
   end

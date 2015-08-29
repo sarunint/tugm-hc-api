@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'scoreboard' => 'scoreboard#index'
   post 'answer' => 'scoreboard#update'
+  get 'reset' => 'scoreboard#destroy'
   root 'scoreboard#show'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
